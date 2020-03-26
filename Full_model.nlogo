@@ -285,7 +285,7 @@ to attempt-move
   ifelse block-count != 0
   [
     check-blockers
-    continue_based_on_block_color
+    continue_based_on_block_
   ]
 
  ;if no blocking neighbors:
@@ -313,23 +313,23 @@ To check-blockers
         if (distance-to-block > 0 and distance-to-block < 0.9)
         [ set wrong? true ] ; should not happen (brown)
         if (distance-to-block <= 1.1 and distance-to-block > 0.9 )
-        [ set zero? true ] ; (pink)
+        [ set zero? true ] ; should choose another direction to move (pink)
         if (distance-to-block > 1 and distance-to-block < 2 )
-        [ set small? true ] ; take a small step (blue)
+        [ set small? true ] ; should take a small step (blue)
         if (distance-to-block = 2) [
           set ok? true] ; can move one whole step (yellow)
       ]
 end
 
-To continue_based_on_block_color
+To continue_based_on_block_type
 
   ifelse any? blocks with [wrong? = true]
   [set dist_traveled 0]
 
     [ifelse any? blocks with [zero? = true]
       [ update-heading 180
-        let new-neighbors other turtles in-radius 2
-        set blocks other turtles-on new-neighbors in-cone 2 180
+        let new-neighbors other turtles in-radius 2 * step-size
+        set blocks other turtles-on new-neighbors in-cone (2 * step-size) 180
         let n_block-count count blocks
 
         ;if there is a blocking neighbors:
