@@ -1,12 +1,6 @@
-; changes: this version of the model used the amount of food that needs to be exchanged as a trophallaxis time instead of setting this variable beforehand
-;; Our assumption is that at each encounter bees will give exchange (delta_food/2) units of their food at the rate of (0.5/180) at each tick
-;; We also assume that maximum time for food transfer is equal to 50 ticks in which the bees can transfer (1-0)/2 units of food
-
-;;world-width
-;;the number of columns in the terrain grid: 1 + max-pxcor - min-pxcor + 1
-
-;;world-height
-;;the number of rows in the terrain grid: max-pycor - min-pycor + 1
+; changes: The model used the amount of food that needs to be exchanged as a trophallaxis duration instead of setting this variable beforehand
+;; Our assumption is that at each encounter bees will give exchange (delta_food/2) units of their food 
+;; We experimentally set the maximum time for food transfer is equal to 50 ticks in which the bees can transfer (1-0)/2 units of food
 
 extensions [ Nw vid array table csv GIS array csv]
 globals
@@ -124,9 +118,7 @@ to setup
 
     set breed hungries
     set size 1 ;; A turtle is the same size as a patch
-
     ;setxy random-pxcor random-pycor
-
     set x0 pxcor
     set y0 pycor
     set food 0
@@ -160,10 +152,8 @@ to setup
     set size 1 ;; A turtle is the same size as a patch
     set food 1
     set times 0
-    ;setxy random-pxcor random-pycor
     set x0 pxcor
     set y0 pycor
-    ;setxy 0 0
     set heading random 360
     set hungry? false
     set color red
@@ -274,7 +264,7 @@ to go
  set u_counter count links
 
  ; count the hungries at the end of each tick
- set hungry_left count turtles with [food = 0] ; or [hungry = true]
+ set hungry_left count turtles with [food = 0] 
 
 
  tick
@@ -287,7 +277,7 @@ to attempt-move
 
   ; identify all potential blocks
   set my-neighbors other turtles in-radius 2
-  set blocks other turtles-on my-neighbors in-cone 2 180 ;(step-size * 2 )
+  set blocks other turtles-on my-neighbors in-cone 2 180 
   set block-count count blocks
   set distance-to-block 0
 
@@ -311,8 +301,8 @@ to update-heading [th]
   let h1 heading
   let coin random-float 1
   ifelse coin > 0.5
-  [ set heading heading + random-float th];set heading heading + random-float (theta)]
-  [ set heading heading - random-float th];set heading heading - random-float (theta)]
+  [ set heading heading + random-float th ]
+  [ set heading heading - random-float th ]
   let h2 heading
 end
 
@@ -341,7 +331,6 @@ To continue_based_on_block_color
         let new-neighbors other turtles in-radius 2
         set blocks other turtles-on new-neighbors in-cone 2 180
         let n_block-count count blocks
-        ;set distance-to-block 0
 
         ;if there is a blocking neighbors:
         ifelse n_block-count != 0
@@ -383,14 +372,6 @@ to check-clusters
       set leader [leader] of myself
     ]
   ]
-;  [ if any? turtles in-radius 1 [
-;    let buddy turtles in-radius 1 with [leader != myself]
-;    ask buddy[
-;      set followers followers + (count buddy)
-;      set leader [leader] of myself
-;    ]
-;  ]
-;  ]
 end
 
 ;; for turtles that are not occupied and found hungry neighbores,
@@ -405,8 +386,6 @@ to exchange_food
 
   ;show target
   let transfer_amount delta_food / 2
-  ;show delta-food
-
   set times times + 1
   set food food - transfer_amount
 
@@ -415,16 +394,14 @@ to exchange_food
 
   ask target
   [
-
     set occupied? true
     set hungry? false
     set target_list lput [who] of target target_list
 
     set food food + transfer_amount
     set counts abs ( round (transfer_amount / food_transfer_rate ))
-    set color scale-color 15 food  0.9 0 ;set color blue
+    set color scale-color 15 food  0.9 0 
     set times times + 1
-
   ]
 
 ;; update the value of variances if and only if the food exchange happens
