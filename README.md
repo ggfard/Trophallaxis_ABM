@@ -1,4 +1,4 @@
 # Trophallaxis_ABM
-This is an agent-based model of the honey bee interactions inspired by food exchange via trophallaxis. The motion of the agents is based on the idea of excluded volume so agents are not allowed to overlap at any timestep during the simulation. Initially, the fed agents are red and the deprived agents are gray. As the model progresses, the agents move while exchanging food and the model stops when the food is distributed almost evenly among all agents.
+The repository describes an agent-based model of the honey bee movement and food exchange interactions via *trophallaxis*. The motion of the agents follows the *excluded volume* rule meaning that agents are not allowed to overlap at any timestep during the simulation. Initially, the *fed* agents (foragers that have some food to share) are red and the *hungry* agents are gray. As the model progresses, the agents move while exchanging food when thery come close and the model stops when the food is distributed almost evenly among all agents.
 
 ![](Simulation1.png)
