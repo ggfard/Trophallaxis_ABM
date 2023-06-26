@@ -1,5 +1,5 @@
 ; changes: The model used the amount of food that needs to be exchanged as a trophallaxis duration instead of setting this variable beforehand
-;; Our assumption is that at each encounter bees will give exchange (delta_food/2) units of their food 
+;; Our assumption is that at each encounter bees will give exchange (delta_food/2) units of their food
 ;; We experimentally set the maximum time for food transfer is equal to 50 ticks in which the bees can transfer (1-0)/2 units of food
 
 extensions [ Nw vid array table csv GIS array csv]
@@ -264,7 +264,7 @@ to go
  set u_counter count links
 
  ; count the hungries at the end of each tick
- set hungry_left count turtles with [food = 0] 
+ set hungry_left count turtles with [food = 0]
 
 
  tick
@@ -277,7 +277,7 @@ to attempt-move
 
   ; identify all potential blocks
   set my-neighbors other turtles in-radius 2
-  set blocks other turtles-on my-neighbors in-cone 2 180 
+  set blocks other turtles-on my-neighbors in-cone 2 180
   set block-count count blocks
   set distance-to-block 0
 
@@ -285,7 +285,7 @@ to attempt-move
   ifelse block-count != 0
   [
     check-blockers
-    continue_based_on_block_
+    continue_based_on_block_type
   ]
 
  ;if no blocking neighbors:
@@ -328,7 +328,7 @@ To continue_based_on_block_type
 
     [ifelse any? blocks with [zero? = true]
       [ update-heading 180
-        let new-neighbors other turtles in-radius 2 * step-size
+        let new-neighbors other turtles in-radius (2 * step-size)
         set blocks other turtles-on new-neighbors in-cone (2 * step-size) 180
         let n_block-count count blocks
 
@@ -400,7 +400,7 @@ to exchange_food
 
     set food food + transfer_amount
     set counts abs ( round (transfer_amount / food_transfer_rate ))
-    set color scale-color 15 food  0.9 0 
+    set color scale-color 15 food  0.9 0
     set times times + 1
   ]
 
@@ -414,8 +414,8 @@ end
 GRAPHICS-WINDOW
 290
 39
-809
-559
+757
+507
 -1
 -1
 13.91
@@ -516,7 +516,7 @@ MONITOR
 80
 490
 207
-536
+535
 Recording Status
 vid:recorder-status
 17
@@ -545,7 +545,7 @@ MONITOR
 347
 570
 511
-616
+615
 Trophallaxis Encounters
 tro_counter
 17
@@ -567,7 +567,7 @@ MONITOR
 842
 496
 994
-542
+541
 Max exchange duration
 max [delta_t] of turtles
 17
@@ -589,7 +589,7 @@ MONITOR
 634
 572
 764
-618
+617
 Unique Encounters
 u_counter
 2
@@ -618,7 +618,7 @@ MONITOR
 117
 66
 185
-108
+107
 Time
 ticks
 18
@@ -640,7 +640,7 @@ MONITOR
 113
 386
 172
-432
+431
 Density
 precision (Number_of_bees / (count patches)) 2
 17
@@ -1140,7 +1140,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0
+NetLogo 6.3.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
